@@ -91,7 +91,7 @@ public class PathFinderDFS {
         pathFinder.addEdge(1, 3, 10); // Vertex 1 to Vertex 3 with value 10
         pathFinder.addEdge(2, 3, 3);  // Vertex 2 to Vertex 3 with value 3
         pathFinder.addEdge(3, 4, 8);  // Vertex 3 to Vertex 4 with value 8
-        pathFinder.addEdge(3, 5, 2);  // Vertex 3 to Vertex 5 with value 2
+        pathFinder.addEdge(3, 0, 2);  // Vertex 3 to Vertex 5 with value 2
         pathFinder.addEdge(4, 5, 6);  // Vertex 4 to Vertex 6 with value 6
         pathFinder.addEdge(5, 1, 4);  // Vertex 5 to Vertex 6 with value 4
 
