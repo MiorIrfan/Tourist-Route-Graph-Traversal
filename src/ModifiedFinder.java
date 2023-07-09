@@ -157,10 +157,10 @@ public class ModifiedFinder {
 
         // Prompt the user to enter the source and destination cities
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter source city: ");
-        String sourceCity = scanner.nextLine();
-        System.out.print("Enter destination city: ");
-        String destinationCity = scanner.nextLine();
+        System.out.print("Enter your current place: ");
+        String sourceCity = scanner.nextLine().trim().toUpperCase();
+        System.out.print("Enter your destination place: ");
+        String destinationCity = scanner.nextLine().trim().toUpperCase();
 
         System.out.println();
 
@@ -198,46 +198,46 @@ public class ModifiedFinder {
 
     // Helper method to convert city name to vertex number
     private static int cityToVertex(String city) {
-        switch (city) {
-            case "Balik Pulau":
+        switch (city.toUpperCase()) {
+            case "BALIK PULAU":
                 return 1;
-            case "Muzium Cafe Western":
+            case "MUZIUM CAFE WESTERN":
                 return 2;
-            case "Kek Lok Si Temple":
+            case "KEK LOK SI TEMPLE":
                 return 3;
-            case "Masjid Negeri":
+            case "MASJID NEGERI":
                 return 4;
-            case "Komtar":
+            case "KOMTAR":
                 return 5;
-            case "Jetty":
+            case "JETTY":
                 return 6;
-            case "Airport Penang":
+            case "AIRPORT PENANG":
                 return 7;
-            case "Sungai Tiram":
+            case "SUNGAI TIRAM":
                 return 8;
-            case "Gelugor Penang":
+            case "GELUGOR PENANG":
                 return 9;
-            case "General Hospital Penang":
+            case "GENERAL HOSPITAL PENANG":
                 return 10;
-            case "Batu Ferringhi":
+            case "BATU FERRINGHI":
                 return 11;
-            case "Teluk Bahang":
+            case "TELUK BAHANG":
                 return 12;
-            case "Batu Maung":
+            case "BATU MAUNG":
                 return 13;
-            case "Sunshine Bayan Baru":
+            case "SUNSHINE BAYAN BARU":
                 return 14;
-            case "Kompleks Bukit Jambul":
+            case "KOMPLEKS BUKIT JAMBUL":
                 return 15;
-            case "Oriental Garden":
+            case "ORIENTAL GARDEN":
                 return 16;
-            case "Jelutong":
+            case "JELUTONG":
                 return 17;
-            case "Sungai Pinang":
+            case "SUNGAI PINANG":
                 return 18;
-            case "Queensbay":
+            case "QUEENSBAY":
                 return 19;
-            case "Muzium Perang":
+            case "MUZIUM PERANG":
                 return 20;
             default:
                 throw new IllegalArgumentException("Invalid city name: " + city);
@@ -248,45 +248,45 @@ public class ModifiedFinder {
     private static String vertexToCity(int vertex) {
         switch (vertex) {
             case 1:
-                return "Balik Pulau";
+                return "BALIK PULAU";
             case 2:
-                return "Muzium Cafe Western";
+                return "MUZIUM CAFE WESTERN";
             case 3:
-                return "Kek Lok Si Temple";
+                return "KEK LOK SI TEMPLE";
             case 4:
-                return "Masjid Negeri";
+                return "MASJID NEGERI";
             case 5:
-                return "Komtar";
+                return "KOMTAR";
             case 6:
-                return "Jetty";
+                return "JETTY";
             case 7:
-                return "Airport Penang";
+                return "AIRPORT PENANG";
             case 8:
-                return "Sungai Tiram";
+                return "SUNGAI TIRAM";
             case 9:
-                return "Gelugor Penang";
+                return "GELUGOR PENANG";
             case 10:
-                return "General Hospital Penang";
+                return "GENERAL HOSPITAL PENANG";
             case 11:
-                return "Batu Ferringhi";
+                return "BATU FERRINGHI";
             case 12:
-                return "Teluk Bahang";
+                return "TELUK BAHANG";
             case 13:
-                return "Batu Maung";
+                return "BATU MAUNG";
             case 14:
-                return "Sunshine Bayan Baru";
+                return "SUNSHINE BAYAN BARU";
             case 15:
-                return "Kompleks Bukit Jambul";
+                return "KOMPLEKS BUKIT JAMBUL";
             case 16:
-                return "Oriental Garden";
+                return "ORIENTAL GARDEN";
             case 17:
-                return "Jelutong";
+                return "JELUTONG";
             case 18:
-                return "Sungai Pinang";
+                return "SUNGAI PINANG";
             case 19:
-                return "Queensbay";
+                return "QUEENSBAY";
             case 20:
-                return "Muzium Perang";
+                return "MUZIUM PERANG";
             default:
                 throw new IllegalArgumentException("Invalid vertex number: " + vertex);
         }
