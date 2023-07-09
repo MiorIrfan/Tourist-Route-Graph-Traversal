@@ -1,4 +1,8 @@
-Hospital Pulau Pinang
+// Validate the input cities
+        if (!isValidCity(sourceCity) || !isValidCity(destinationCity)) {
+            System.out.println("Invalid city name. Please try again.");
+            return;
+        }Hospital Pulau Pinang
 Batu Ferringhi
 Teluk Bahang
 Batu Maung
