@@ -1,21 +1,14 @@
-// Validate the input cities
-        if (!isValidCity(sourceCity) || !isValidCity(destinationCity)) {
-            System.out.println("Invalid city name. Please try again.");
-            return;
-        }Hospital Pulau Pinang
-Batu Ferringhi
-Teluk Bahang
-Batu Maung
-Sunshine Bayan Baru
-Kompleks Bukit Jambul
-Oriental Garden
-Jelutong
-Sungai Pinang
-Queensbay
 
-        System.out.println();
-        System.out.print("    ******Welcome to Tourist Navigation Plans Application******     \n");
-        System.out.print("----------------------------------------------------------------------\n");
-        System.out.print(" You can see the available places to visit from your current location\n");
-        System.out.print("    This application will suggest top 1 routes that you can take\n");
-        System.out.print("----------------------------------------------------------------------\n\n");
+
+ System.out.println("Please choose from the list of available location/n");
+        System.out.println("BALIK PULAU     ---   MUZIUM CAFE WESTERN");
+        System.out.println("MASJID NEGERI   ---   KEK LOK SI TEMPLE");
+        System.out.println("KOMTAR          ---   AIRPORT PENANG");
+        System.out.println("JETTY           ---   SUNGAI TIRAM");
+        System.out.println("GELUGOR PENANG  ---   GENERAL HOSPITAL PENANG");
+        System.out.println("BATU FERRINGHI  ---   TELUK BAHANG");
+        System.out.println("BATU MAUNG      ---   SUNSHINE BAYAN BARU");
+        System.out.println("SUNGAI PINANG   ---   ORIENTAL GARDEN");
+        System.out.println("JELUTONG        ---   KOMPLEKS BUKIT JAMBUL");
+        System.out.println("QUEENSBAY       ---   MUZIUM PERANG");
+        return -1;
