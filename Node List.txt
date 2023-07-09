@@ -13,13 +13,24 @@ Jelutong
 Sungai Pinang
 Queensbay
 
-//502
+    public static void main(String[] args) {
+        // Create a road network graph
+        int numCities = 48;
+        ModifiedFinder pathFinder = new ModifiedFinder(numCities);
+        //502
         pathFinder.addEdge(1, 2, 5);  // Road from City 0 (source) to City 1 with distance 5
         pathFinder.addEdge(2, 3, 7);  // Road from City 0 (source) to City 2 with distance 7
         pathFinder.addEdge(3, 4, 10); // Road from City 1 to City 3 with distance 10
         pathFinder.addEdge(4, 5, 3);  // Road from City 2 to City 3 with distance 3
         pathFinder.addEdge(5, 6, 8);  // Road from City 3 to City 4 with distance 8
-        
+
+        //502 reverse
+        pathFinder.addEdge(6, 5, 5);  // Road from City 0 (source) to City 1 with distance 5
+        pathFinder.addEdge(5, 4, 7);  // Road from City 0 (source) to City 2 with distance 7
+        pathFinder.addEdge(4, 3, 10); // Road from City 1 to City 3 with distance 10
+        pathFinder.addEdge(3, 2, 3);  // Road from City 2 to City 3 with distance 3
+        pathFinder.addEdge(2, 1, 8);  // Road from City 3 to City 4 with distance 8
+
         //102
         pathFinder.addEdge(7, 8, 2);  // Road from City 3 to City 5 with distance 2
         pathFinder.addEdge(8, 9, 6);  // Road from City 4 to City 6 with distance 6
@@ -28,7 +39,16 @@ Queensbay
         pathFinder.addEdge(5, 10, 7);  // Road from City 0 (source) to City 2 with distance 7
         pathFinder.addEdge(10, 11, 10); // Road from City 1 to City 3 with distance 10
         pathFinder.addEdge(11, 12, 3);  // Road from City 2 to City 3 with distance 3
-        
+
+        //102 reverse
+        pathFinder.addEdge(12, 11, 2);  // Road from City 3 to City 5 with distance 2
+        pathFinder.addEdge(11, 10, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(10, 5, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(5, 4, 2);  // Road from City 3 to City 5 with distance 2
+        pathFinder.addEdge(4, 9, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(9, 8, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(8, 7, 2);  // Road from City 3 to City 5 with distance 2
+
         //306
         pathFinder.addEdge(7, 14, 8);  // Road from City 3 to City 4 with distance 8
         pathFinder.addEdge(14, 19, 2);  // Road from City 3 to City 5 with distance 2
@@ -36,7 +56,15 @@ Queensbay
         pathFinder.addEdge(15, 16, 4);  // Road from City 5 to City 6 with distance 4
         pathFinder.addEdge(16, 4, 8);  // Road from City 3 to City 4 with distance 8
         pathFinder.addEdge(4, 10, 2);  // Road from City 3 to City 5 with distance 2
-        
+
+        //306 reverse
+        pathFinder.addEdge(10, 4, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(4, 16, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(16, 15, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(15, 19, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(19, 14, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(14, 7, 4);  // Road from City 5 to City 6 with distance 4
+
         //302
         pathFinder.addEdge(13, 20, 8);  // Road from City 3 to City 4 with distance 8
         pathFinder.addEdge(20, 14, 2);  // Road from City 3 to City 5 with distance 2
@@ -44,4 +72,66 @@ Queensbay
         pathFinder.addEdge(15, 17, 4);  // Road from City 5 to City 6 with distance 4
         pathFinder.addEdge(17, 18, 8);  // Road from City 3 to City 4 with distance 8
         pathFinder.addEdge(18, 6, 2);  // Road from City 3 to City 5 with distance 2
-        
+
+        //302 reverse
+        pathFinder.addEdge(6, 18, 8);  // Road from City 3 to City 4 with distance 8
+        pathFinder.addEdge(18, 17, 2);  // Road from City 3 to City 5 with distance 2
+        pathFinder.addEdge(17, 15, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(15, 14, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(14, 20, 8);  // Road from City 3 to City 4 with distance 8
+        pathFinder.addEdge(20, 13, 2);  // Road from City 3 to City 5 with distance 2
+
+        //Display message to welcome user
+        System
+        System.out.print("******Welcome to Tourist Navigation Plans Application******\n");
+        System.out.print("You can see the available places to visit from your current location\n");
+        System.out.print("This application will suggest top 1 routes that you can take\n\n");
+
+        char answer;
+        do {
+            // Prompt the user to enter the source and destination cities
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter your current place: ");
+            String sourceCity = scanner.nextLine().trim().toUpperCase();
+            System.out.print("Enter your destination place: ");
+            String destinationCity = scanner.nextLine().trim().toUpperCase();
+
+            System.out.println();
+
+            // Find the path using DFS
+            int source = cityToVertex(sourceCity);
+            int destination = cityToVertex(destinationCity);
+            List<Integer> path = pathFinder.findPathDFS(source, destination);
+
+            // Output the result
+            if (path != null) {
+                System.out.println("Path from " + sourceCity + " to " + destinationCity + ":");
+                for (int i = 0; i < path.size(); i++) {
+                    int vertex = path.get(i);
+                    String city = vertexToCity(vertex);
+                    System.out.print(city);
+                    if (i != path.size() - 1) {
+                        System.out.print(" -> ");
+                    }
+                }
+                System.out.println();
+
+                // Calculate the total weight of the path
+                int totalWeight = 0;
+                for (int i = 0; i < path.size() - 1; i++) {
+                    int sourceVertex = path.get(i);
+                    int destinationVertex = path.get(i + 1);
+                    int edgeWeight = pathFinder.getEdgeValue(sourceVertex, destinationVertex);
+                    totalWeight += edgeWeight;
+                }
+                System.out.println("Total distance of the path: " + totalWeight + " km");
+            } else {
+                System.out.println("No path from " + sourceCity + " to " + destinationCity + " found.");
+            }
+
+            System.out.print("Do you want to find another places that you desired to go? (y/n): ");
+            answer = scanner.nextLine().toLowerCase().charAt(0);
+        } while (answer == 'y');
+
+        System.out.println("Thank you for using this app! Have a nice day!");
+    }
