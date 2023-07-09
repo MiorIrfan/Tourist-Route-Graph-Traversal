@@ -200,7 +200,7 @@ public class ModifiedFinderMultiplePath {
 
     }
 
-    // Helper method to convert city name to vertex number
+    // Helper method to convert city name to vertex numberff
     private static int cityToVertex(String city) {
         switch (city) {
             case "Balik Pulau":
