@@ -1,41 +1,44 @@
 //Assignment 2 CPT212 2022/2023
 //Group members: 1. MIOR MUHAMMAD IRFAN BIN MIOR LATFEE
 //               2. MOHAMAD NAZMI BIN HASHIM
+
 import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class ModifiedFinder {
-    private int numVertices;
-    private List<Integer>[] adjacencyList;
-    private List<Edge>[] edgeList;
-    private List<Integer> path;
-    private boolean pathFound;
+    private int numNodes;
+    private List<Integer>[] adjacentList;
+    private List<Edge>[] nodeEdgeList;
+    private List<Integer> track;
+    private boolean foundedTrack;
 
-    public ModifiedFinder(int numVertices) {
-        this.numVertices = numVertices;
-        adjacencyList = new ArrayList[numVertices];
-        edgeList = new ArrayList[numVertices];
-        for (int i = 0; i < numVertices; i++) {
-            adjacencyList[i] = new ArrayList<>();
-            edgeList[i] = new ArrayList<>();
+    public ModifiedFinder(int numNodes) {
+        this.numNodes = numNodes;
+        adjacentList = new ArrayList[numNodes];
+        nodeEdgeList = new ArrayList[numNodes];
+        for (int i = 0; i < numNodes; i++) {
+            adjacentList[i] = new ArrayList<>();
+            nodeEdgeList[i] = new ArrayList<>();
         }
-        path = new ArrayList<>();
-        pathFound = false;
+        track = new ArrayList<>();
+        foundedTrack = false;
     }
 
-    public void addEdge(int source, int destination, int value) {
-        adjacencyList[source].add(destination);
-        edgeList[source].add(new Edge(source, destination, value));
+    public void addEdge(int origin, int destination, int value) {
+        adjacentList[origin].add(destination);
+        nodeEdgeList[origin].add(new Edge(origin, destination, value));
     }
 
-    public List<Integer> findPathDFS(int source, int destination) {
-        boolean[] visited = new boolean[numVertices];
-        int[] parent = new int[numVertices];
+    public List<Integer> findPathDFS(int originNode, int destinationNode) {
+        boolean[] visited = new boolean[numNodes];
+        int[] parent = new int[numNodes];
         Arrays.fill(parent, -1);
-        dfs(source, destination, visited, parent);
+        dfs(originNode, destinationNode, visited, parent);
 
-        if (pathFound) {
+        if (foundedTrack) {
             List<Integer> finalPath = new ArrayList<>();
-            int current = destination;
+            int current = destinationNode;
             while (current != -1) {
                 finalPath.add(0, current);
                 current = parent[current];
@@ -49,15 +52,15 @@ public class ModifiedFinder {
     private void dfs(int current, int destination, boolean[] visited, int[] parent) {
         visited[current] = true;
         if (current == destination) {
-            pathFound = true;
+            foundedTrack = true;
             return;
         }
-        for (int i = 0; i < adjacencyList[current].size(); i++) {
-            int neighbor = adjacencyList[current].get(i);
+        for (int i = 0; i < adjacentList[current].size(); i++) {
+            int neighbor = adjacentList[current].get(i);
             if (!visited[neighbor]) {
                 parent[neighbor] = current;
                 dfs(neighbor, destination, visited, parent);
-                if (pathFound) {
+                if (foundedTrack) {
                     return;
                 }
             }
@@ -65,19 +68,19 @@ public class ModifiedFinder {
     }
 
     static class Edge {
-        int source;
+        int origin;
         int destination;
         int value;
 
-        public Edge(int source, int destination, int value) {
-            this.source = source;
+        public Edge(int origin, int destination, int value) {
+            this.origin = origin;
             this.destination = destination;
             this.value = value;
         }
     }
 
-    public int getEdgeValue(int source, int destination) {
-        for (Edge edge : edgeList[source]) {
+    public int getEdgeValue(int origin, int destination) {
+        for (Edge edge : nodeEdgeList[origin]) {
             if (edge.destination == destination) {
                 return edge.value;
             }
@@ -85,7 +88,7 @@ public class ModifiedFinder {
         return 0;  // If no edge found, return 0 or a suitable default value
     }
 
-    public static int menu(){
+    public static int menu() {
         System.out.println("Please choose from the list of available location/n");
         System.out.println("BALIK PULAU     ---   MUZIUM CAFE WESTERN");
         System.out.println("MASJID NEGERI   ---   KEK LOK SI TEMPLE");
@@ -102,140 +105,93 @@ public class ModifiedFinder {
 
     public static void main(String[] args) {
         // Create a road network graph
-        int numCities = 48;
-        ModifiedFinder pathFinder = new ModifiedFinder(numCities);
-        //502
-        pathFinder.addEdge(1, 2, 5);  // Road from City 0 (source) to City 1 with distance 5
-        pathFinder.addEdge(2, 3, 7);  // Road from City 0 (source) to City 2 with distance 7
-        pathFinder.addEdge(3, 4, 10); // Road from City 1 to City 3 with distance 10
-        pathFinder.addEdge(4, 5, 3);  // Road from City 2 to City 3 with distance 3
-        pathFinder.addEdge(5, 6, 8);  // Road from City 3 to City 4 with distance 8
+        int numNodes = 48;
+        ModifiedFinder trackSearcher = new ModifiedFinder(numNodes);
 
-        //502 reverse
-        pathFinder.addEdge(6, 5, 5);  // Road from City 0 (source) to City 1 with distance 5
-        pathFinder.addEdge(5, 4, 7);  // Road from City 0 (source) to City 2 with distance 7
-        pathFinder.addEdge(4, 3, 10); // Road from City 1 to City 3 with distance 10
-        pathFinder.addEdge(3, 2, 3);  // Road from City 2 to City 3 with distance 3
-        pathFinder.addEdge(2, 1, 8);  // Road from City 3 to City 4 with distance 8
+        // Read edges from a file
+        try {
+            File file = new File("edges.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\t");
+                int source = Integer.parseInt(parts[0]);
+                int destination = Integer.parseInt(parts[1]);
+                int value = Integer.parseInt(parts[2]);
+                trackSearcher.addEdge(source, destination, value);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        //102
-        pathFinder.addEdge(7, 8, 2);  // Road from City 3 to City 5 with distance 2
-        pathFinder.addEdge(8, 9, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(9, 4, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(4, 5, 5);  // Road from City 0 (source) to City 1 with distance 5
-        pathFinder.addEdge(5, 10, 7);  // Road from City 0 (source) to City 2 with distance 7
-        pathFinder.addEdge(10, 11, 10); // Road from City 1 to City 3 with distance 10
-        pathFinder.addEdge(11, 12, 3);  // Road from City 2 to City 3 with distance 3
-
-        //102 reverse
-        pathFinder.addEdge(12, 11, 2);  // Road from City 3 to City 5 with distance 2
-        pathFinder.addEdge(11, 10, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(10, 5, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(5, 4, 2);  // Road from City 3 to City 5 with distance 2
-        pathFinder.addEdge(4, 9, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(9, 8, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(8, 7, 2);  // Road from City 3 to City 5 with distance 2
-
-        //306
-        pathFinder.addEdge(7, 14, 8);  // Road from City 3 to City 4 with distance 8
-        pathFinder.addEdge(14, 19, 2);  // Road from City 3 to City 5 with distance 2
-        pathFinder.addEdge(19, 15, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(15, 16, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(16, 4, 8);  // Road from City 3 to City 4 with distance 8
-        pathFinder.addEdge(4, 10, 2);  // Road from City 3 to City 5 with distance 2
-
-        //306 reverse
-        pathFinder.addEdge(10, 4, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(4, 16, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(16, 15, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(15, 19, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(19, 14, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(14, 7, 4);  // Road from City 5 to City 6 with distance 4
-
-        //302
-        pathFinder.addEdge(13, 20, 8);  // Road from City 3 to City 4 with distance 8
-        pathFinder.addEdge(20, 14, 2);  // Road from City 3 to City 5 with distance 2
-        pathFinder.addEdge(14, 15, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(15, 17, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(17, 18, 8);  // Road from City 3 to City 4 with distance 8
-        pathFinder.addEdge(18, 6, 2);  // Road from City 3 to City 5 with distance 2
-
-        //302 reverse
-        pathFinder.addEdge(6, 18, 8);  // Road from City 3 to City 4 with distance 8
-        pathFinder.addEdge(18, 17, 2);  // Road from City 3 to City 5 with distance 2
-        pathFinder.addEdge(17, 15, 6);  // Road from City 4 to City 6 with distance 6
-        pathFinder.addEdge(15, 14, 4);  // Road from City 5 to City 6 with distance 4
-        pathFinder.addEdge(14, 20, 8);  // Road from City 3 to City 4 with distance 8
-        pathFinder.addEdge(20, 13, 2);  // Road from City 3 to City 5 with distance 2
-
-        //Display message to welcome user
-        System.out.print("\n    ******Welcome to Tourist Navigation Plans Application******     \n");
-        System.out.print("----------------------------------------------------------------------\n");
-        System.out.print(" You can see the available places to visit from your current location\n");
-        System.out.print("    This application will suggest top 1 routes that you can take\n");
-        System.out.print("----------------------------------------------------------------------\n");
+        // Display message to welcome user
+        System.out.println("\n    ******Welcome to Tourist Navigation Plans Application******     ");
+        System.out.println("----------------------------------------------------------------------");
+        System.out.println(" You can see the available places to visit from your current location");
+        System.out.println("    This application will suggest the top 1 route that you can take");
+        System.out.println("----------------------------------------------------------------------");
 
         menu();
 
-        String sourceCity, destinationCity;
-        int source, destination;
+        String originNode, destinationNode;
+        int origin, destination;
 
         char answer;
         do {
             do {
-                // Prompt the user to enter the source and destination cities
+                // Prompt the user to enter the origin and destination cities
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("\nEnter your current location: ");
-                sourceCity = scanner.nextLine().trim().toUpperCase();
+                originNode = scanner.nextLine().trim().toUpperCase();
                 System.out.print("Enter your destination: ");
-                destinationCity = scanner.nextLine().trim().toUpperCase();
+                destinationNode = scanner.nextLine().trim().toUpperCase();
 
-                // convert to int node
-                source = cityToVertex(sourceCity);
-                destination = cityToVertex(destinationCity);
+                // Convert to int node
+                origin = locationToVertex(originNode);
+                destination = locationToVertex(destinationNode);
 
-            }while(source == -1 || destination == -1);
+            } while (origin == -1 || destination == -1);
 
             // Find the path using DFS
-
-            List<Integer> path = pathFinder.findPathDFS(source, destination);
+            List<Integer> track = trackSearcher.findPathDFS(origin, destination);
 
             // Output the result
-            if (path != null) {
-                System.out.println("\nPath from " + sourceCity + " to " + destinationCity + ":");
-                for (int i = 0; i < path.size(); i++) {
-                    int vertex = path.get(i);
-                    String city = vertexToCity(vertex);
-                    System.out.print(city);
-                    if (i != path.size() - 1) {
+            if (track != null) {
+                System.out.println("\nPath from " + originNode + " to " + destinationNode + ":");
+                for (int i = 0; i < track.size(); i++) {
+                    int vertex = track.get(i);
+                    String location = vertexToLocation(vertex);
+                    System.out.print(location);
+                    if (i != track.size() - 1) {
                         System.out.print(" -> ");
                     }
                 }
                 System.out.println();
 
                 // Calculate the total weight of the path
-                int totalWeight = 0;
-                for (int i = 0; i < path.size() - 1; i++) {
-                    int sourceVertex = path.get(i);
-                    int destinationVertex = path.get(i + 1);
-                    int edgeWeight = pathFinder.getEdgeValue(sourceVertex, destinationVertex);
-                    totalWeight += edgeWeight;
+                int totalDistance = 0;
+                for (int i = 0; i < track.size() - 1; i++) {
+                    int originVertex = track.get(i);
+                    int destinationVertex = track.get(i + 1);
+                    int edgeDistance = trackSearcher.getEdgeValue(originVertex, destinationVertex);
+                    totalDistance += edgeDistance;
                 }
-                System.out.println("Total distance of the path: " + totalWeight + " km\n");
+                System.out.println("Total distance of the path: " + totalDistance + " km\n");
             } else {
-                System.out.println("No path from " + sourceCity + " to " + destinationCity + " found.");
+                System.out.println("No path from " + originNode + " to " + destinationNode + " found.");
             }
 
-            System.out.print("Do you want to find another places that you desired to go? (y/n): ");
+            System.out.print("Do you want to find another place you want to go? (y/n): ");
             Scanner scanner = new Scanner(System.in);
             answer = scanner.nextLine().toLowerCase().charAt(0);
-    } while (answer == 'y');
+        } while (answer == 'y');
 
         System.out.println("\nThank you for using this app! Have a nice day!");
     }
 
     // Helper method to convert city name to vertex number
-    private static int cityToVertex(String city) {
+    private static int locationToVertex(String city) {
         switch (city.toUpperCase()) {
             case "BALIK PULAU":
                 return 1;
@@ -284,7 +240,7 @@ public class ModifiedFinder {
     }
 
     // Helper method to convert vertex number to city name
-    private static String vertexToCity(int vertex) {
+    private static String vertexToLocation(int vertex) {
         switch (vertex) {
             case 1:
                 return "BALIK PULAU";
