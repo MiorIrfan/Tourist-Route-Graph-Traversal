@@ -9,3 +9,35 @@ Jelutong
 Sungai Pinang
 Queensbay
 
+//502
+        pathFinder.addEdge(1, 2, 5);  // Road from City 0 (source) to City 1 with distance 5
+        pathFinder.addEdge(2, 3, 7);  // Road from City 0 (source) to City 2 with distance 7
+        pathFinder.addEdge(3, 4, 10); // Road from City 1 to City 3 with distance 10
+        pathFinder.addEdge(4, 5, 3);  // Road from City 2 to City 3 with distance 3
+        pathFinder.addEdge(5, 6, 8);  // Road from City 3 to City 4 with distance 8
+        
+        //102
+        pathFinder.addEdge(7, 8, 2);  // Road from City 3 to City 5 with distance 2
+        pathFinder.addEdge(8, 9, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(9, 4, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(4, 5, 5);  // Road from City 0 (source) to City 1 with distance 5
+        pathFinder.addEdge(5, 10, 7);  // Road from City 0 (source) to City 2 with distance 7
+        pathFinder.addEdge(10, 11, 10); // Road from City 1 to City 3 with distance 10
+        pathFinder.addEdge(11, 12, 3);  // Road from City 2 to City 3 with distance 3
+        
+        //306
+        pathFinder.addEdge(7, 14, 8);  // Road from City 3 to City 4 with distance 8
+        pathFinder.addEdge(14, 19, 2);  // Road from City 3 to City 5 with distance 2
+        pathFinder.addEdge(19, 15, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(15, 16, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(16, 4, 8);  // Road from City 3 to City 4 with distance 8
+        pathFinder.addEdge(4, 10, 2);  // Road from City 3 to City 5 with distance 2
+        
+        //302
+        pathFinder.addEdge(13, 20, 8);  // Road from City 3 to City 4 with distance 8
+        pathFinder.addEdge(20, 14, 2);  // Road from City 3 to City 5 with distance 2
+        pathFinder.addEdge(14, 15, 6);  // Road from City 4 to City 6 with distance 6
+        pathFinder.addEdge(15, 17, 4);  // Road from City 5 to City 6 with distance 4
+        pathFinder.addEdge(17, 18, 8);  // Road from City 3 to City 4 with distance 8
+        pathFinder.addEdge(18, 6, 2);  // Road from City 3 to City 5 with distance 2
+        
