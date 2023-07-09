@@ -33,6 +33,7 @@ public class PathFinderDFS {
         if (pathFound) {
             List<Integer> finalPath = new ArrayList<>();
             int current = destination;
+
             while (current != -1) {
                 finalPath.add(0, current);
                 current = parent[current];
@@ -90,8 +91,8 @@ public class PathFinderDFS {
         pathFinder.addEdge(0, 2, 7);  // Vertex 0 (source) to Vertex 2 with value 7
         pathFinder.addEdge(1, 3, 10); // Vertex 1 to Vertex 3 with value 10
         pathFinder.addEdge(2, 3, 3);  // Vertex 2 to Vertex 3 with value 3
-        pathFinder.addEdge(3, 4, 8);  // Vertex 3 to Vertex 4 with value 8
-        pathFinder.addEdge(3, 0, 2);  // Vertex 3 to Vertex 5 with value 2
+        pathFinder.addEdge(3, 0, 8);  // Vertex 3 to Vertex 4 with value 8
+        pathFinder.addEdge(3, 4, 2);  // Vertex 3 to Vertex 5 with value 2
         pathFinder.addEdge(4, 5, 6);  // Vertex 4 to Vertex 6 with value 6
         pathFinder.addEdge(5, 1, 4);  // Vertex 5 to Vertex 6 with value 4
 

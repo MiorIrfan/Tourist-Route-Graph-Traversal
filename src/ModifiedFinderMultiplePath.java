@@ -147,16 +147,23 @@ public class ModifiedFinderMultiplePath {
         System.out.print("You can see the available places to visit from your current location\n");
         System.out.print("This application will suggest top 5 routes that you can take\n");
 
-        // Prompt the user to enter the source and destination cities
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter source city: ");
-        String sourceCity = scanner.nextLine();
-        System.out.print("Enter destination city: ");
-        String destinationCity = scanner.nextLine();
+        String sourceCity, destinationCity;
+        int source, destination;
 
+        do {
+            // Prompt the user to enter the source and destination cities
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter source city: ");
+            sourceCity = scanner.nextLine();
+            System.out.print("Enter destination city: ");
+            destinationCity = scanner.nextLine();
+
+            // convert to int node
+            source = cityToVertex(sourceCity);
+            destination = cityToVertex(destinationCity);
+
+        }while(source == -1 || destination == -1);
         // Find all possible paths using DFS
-        int source = cityToVertex(sourceCity);
-        int destination = cityToVertex(destinationCity);
         List<List<Integer>> allPaths = pathFinder.findAllPathsDFS(source, destination);
 
         int counter = 5;
@@ -244,7 +251,8 @@ public class ModifiedFinderMultiplePath {
             case "Muzium Perang":
                 return 20;
             default:
-                throw new IllegalArgumentException("Invalid city name: " + city);
+                System.out.println("Invalid city name: " + city);
+                return -1;
         }
     }
 

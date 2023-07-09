@@ -1,3 +1,6 @@
+//Assignment 2 CPT212 2022/2023
+//Group members: 1. MIOR MUHAMMAD IRFAN BIN MIOR LATFEE
+//               2. MOHAMAD NAZMI BIN HASHIM
 import java.util.*;
 
 public class ModifiedFinder {
@@ -82,6 +85,21 @@ public class ModifiedFinder {
         return 0;  // If no edge found, return 0 or a suitable default value
     }
 
+    public static int menu(){
+        System.out.println("Please choose from the list of available location/n");
+        System.out.println("BALIK PULAU     ---   MUZIUM CAFE WESTERN");
+        System.out.println("MASJID NEGERI   ---   KEK LOK SI TEMPLE");
+        System.out.println("KOMTAR          ---   AIRPORT PENANG");
+        System.out.println("JETTY           ---   SUNGAI TIRAM");
+        System.out.println("GELUGOR PENANG  ---   GENERAL HOSPITAL PENANG");
+        System.out.println("BATU FERRINGHI  ---   TELUK BAHANG");
+        System.out.println("BATU MAUNG      ---   SUNSHINE BAYAN BARU");
+        System.out.println("SUNGAI PINANG   ---   ORIENTAL GARDEN");
+        System.out.println("JELUTONG        ---   KOMPLEKS BUKIT JAMBUL");
+        System.out.println("QUEENSBAY       ---   MUZIUM PERANG");
+        return -1;
+    }
+
     public static void main(String[] args) {
         // Create a road network graph
         int numCities = 48;
@@ -151,49 +169,69 @@ public class ModifiedFinder {
         pathFinder.addEdge(20, 13, 2);  // Road from City 3 to City 5 with distance 2
 
         //Display message to welcome user
-        System.out.print("******Welcome to Tourist Navigation Plans Application******\n");
-        System.out.print("You can see the available places to visit from your current location\n");
-        System.out.print("This application will suggest top 1 routes that you can take\n\n");
+        System.out.print("\n    ******Welcome to Tourist Navigation Plans Application******     \n");
+        System.out.print("----------------------------------------------------------------------\n");
+        System.out.print(" You can see the available places to visit from your current location\n");
+        System.out.print("    This application will suggest top 1 routes that you can take\n");
+        System.out.print("----------------------------------------------------------------------\n");
 
-        // Prompt the user to enter the source and destination cities
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your current place: ");
-        String sourceCity = scanner.nextLine().trim().toUpperCase();
-        System.out.print("Enter your destination place: ");
-        String destinationCity = scanner.nextLine().trim().toUpperCase();
+        menu();
 
-        System.out.println();
+        String sourceCity, destinationCity;
+        int source, destination;
 
-        // Find the path using DFS
-        int source = cityToVertex(sourceCity);
-        int destination = cityToVertex(destinationCity);
-        List<Integer> path = pathFinder.findPathDFS(source, destination);
+        char answer;
+        do {
+            do {
+                // Prompt the user to enter the source and destination cities
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("\nEnter source city: ");
+                sourceCity = scanner.nextLine().trim().toUpperCase();
+                System.out.print("Enter destination city: ");
+                destinationCity = scanner.nextLine().trim().toUpperCase();
 
-        // Output the result
-        if (path != null) {
-            System.out.println("Path from " + sourceCity + " to " + destinationCity + ":");
-            for (int i = 0; i < path.size(); i++) {
-                int vertex = path.get(i);
-                String city = vertexToCity(vertex);
-                System.out.print(city);
-                if (i != path.size() - 1) {
-                    System.out.print(" -> ");
+                // convert to int node
+                source = cityToVertex(sourceCity);
+                destination = cityToVertex(destinationCity);
+
+            }while(source == -1 || destination == -1);
+
+            // Find the path using DFS
+
+            List<Integer> path = pathFinder.findPathDFS(source, destination);
+
+            // Output the result
+            if (path != null) {
+                System.out.println("\nPath from " + sourceCity + " to " + destinationCity + ":");
+                for (int i = 0; i < path.size(); i++) {
+                    int vertex = path.get(i);
+                    String city = vertexToCity(vertex);
+                    System.out.print(city);
+                    if (i != path.size() - 1) {
+                        System.out.print(" -> ");
+                    }
                 }
-            }
-            System.out.println();
+                System.out.println();
 
-            // Calculate the total weight of the path
-            int totalWeight = 0;
-            for (int i = 0; i < path.size() - 1; i++) {
-                int sourceVertex = path.get(i);
-                int destinationVertex = path.get(i + 1);
-                int edgeWeight = pathFinder.getEdgeValue(sourceVertex, destinationVertex);
-                totalWeight += edgeWeight;
+                // Calculate the total weight of the path
+                int totalWeight = 0;
+                for (int i = 0; i < path.size() - 1; i++) {
+                    int sourceVertex = path.get(i);
+                    int destinationVertex = path.get(i + 1);
+                    int edgeWeight = pathFinder.getEdgeValue(sourceVertex, destinationVertex);
+                    totalWeight += edgeWeight;
+                }
+                System.out.println("Total distance of the path: " + totalWeight + " km\n");
+            } else {
+                System.out.println("No path from " + sourceCity + " to " + destinationCity + " found.");
             }
-            System.out.println("Total distance of the path: " + totalWeight + " km");
-        } else {
-            System.out.println("No path from " + sourceCity + " to " + destinationCity + " found.");
-        }
+
+            System.out.print("Do you want to find another places that you desired to go? (y/n): ");
+            Scanner scanner = new Scanner(System.in);
+            answer = scanner.nextLine().toLowerCase().charAt(0);
+    } while (answer == 'y');
+
+        System.out.println("\nThank you for using this app! Have a nice day!");
     }
 
     // Helper method to convert city name to vertex number
@@ -240,7 +278,8 @@ public class ModifiedFinder {
             case "MUZIUM PERANG":
                 return 20;
             default:
-                throw new IllegalArgumentException("Invalid city name: " + city);
+                System.out.println("Invalid city name: " + city);
+                return -1;
         }
     }
 
