@@ -185,9 +185,9 @@ public class ModifiedFinder {
             do {
                 // Prompt the user to enter the source and destination cities
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("\nEnter source city: ");
+                System.out.print("\nEnter your current location: ");
                 sourceCity = scanner.nextLine().trim().toUpperCase();
-                System.out.print("Enter destination city: ");
+                System.out.print("Enter your destination: ");
                 destinationCity = scanner.nextLine().trim().toUpperCase();
 
                 // convert to int node
@@ -278,7 +278,7 @@ public class ModifiedFinder {
             case "MUZIUM PERANG":
                 return 20;
             default:
-                System.out.println("Invalid city name: " + city);
+                System.out.println("Invalid location name: " + city);
                 return -1;
         }
     }
