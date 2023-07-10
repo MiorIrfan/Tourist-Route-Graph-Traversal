@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class ModifiedFinder {
-    private int numNodes; //the number input edges input for the the nodes
+    private int numNodes; //the number input edges input for the nodes
     private List<Integer>[] adjacentList; //store the nodes and their neighbour
     private List<Edge>[] nodeEdgeList; //store the nodes, the vertex and weight value of the nodes
     private boolean foundedTrack;
