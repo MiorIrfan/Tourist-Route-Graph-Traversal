@@ -65,6 +65,7 @@ public class ModifiedFinder {
                 }
             }
         }
+        visited[current] = false;
     }
 
     static class Edge {
@@ -182,6 +183,7 @@ public class ModifiedFinder {
                 System.out.println("No path from " + originNode + " to " + destinationNode + " found.");
             }
 
+
             System.out.print("Do you want to find another place you want to go? (y/n): ");
             Scanner scanner = new Scanner(System.in);
             answer = scanner.nextLine().toLowerCase().charAt(0);
@@ -190,9 +192,9 @@ public class ModifiedFinder {
         System.out.println("\nThank you for using this app! Have a nice day!");
     }
 
-    // Helper method to convert city name to vertex number
-    private static int locationToVertex(String city) {
-        switch (city.toUpperCase()) {
+    // Helper method to convert location name to vertex number
+    private static int locationToVertex(String location) {
+        switch (location.toUpperCase()) {
             case "BALIK PULAU":
                 return 1;
             case "MUZIUM CAFE WESTERN":
@@ -234,12 +236,12 @@ public class ModifiedFinder {
             case "MUZIUM PERANG":
                 return 20;
             default:
-                System.out.println("Invalid location name: " + city);
+                System.out.println("Invalid location name: " + location);
                 return -1;
         }
     }
 
-    // Helper method to convert vertex number to city name
+    // Helper method to convert vertex number to location name
     private static String vertexToLocation(int vertex) {
         switch (vertex) {
             case 1:
