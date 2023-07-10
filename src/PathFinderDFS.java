@@ -33,7 +33,6 @@ public class PathFinderDFS {
         if (pathFound) {
             List<Integer> finalPath = new ArrayList<>();
             int current = destination;
-
             while (current != -1) {
                 finalPath.add(0, current);
                 current = parent[current];
@@ -86,15 +85,15 @@ public class PathFinderDFS {
     public static void main(String[] args) {
         // Create a transportation system graph
         int numVertices = 7;
-        PathFinderDFS pathFinder = new PathFinderDFS(numVertices);
-        pathFinder.addEdge(0, 1, 5);  // Vertex 0 (origin) to Vertex 1 with value 5
-        pathFinder.addEdge(0, 2, 7);  // Vertex 0 (origin) to Vertex 2 with value 7
-        pathFinder.addEdge(1, 4, 10); // Vertex 1 to Vertex 3 with value 10
-        pathFinder.addEdge(2, 3, 3);  // Vertex 2 to Vertex 3 with value 3
-        pathFinder.addEdge(3, 4, 8);  // Vertex 3 to Vertex 4 with value 8
-        pathFinder.addEdge(3, 0, 2);  // Vertex 3 to Vertex 5 with value 2
-        pathFinder.addEdge(4, 5, 6);  // Vertex 4 to Vertex 6 with value 6
-        pathFinder.addEdge(5, 1, 4);  // Vertex 5 to Vertex 6 with value 4
+        PathFinderDFS trackSearch = new PathFinderDFS(numVertices);
+        trackSearch.addEdge(0, 1, 5);  // Node 0 (origin) to Node 1 with value 5
+        trackSearch.addEdge(0, 2, 7);  // Node 0 (origin) to Node 2 with value 7
+        trackSearch.addEdge(1, 4, 10); // Node 1 to Node 4 with value 10
+        trackSearch.addEdge(2, 3, 3);  // Node 2 to Node 3 with value 3
+        trackSearch.addEdge(3, 4, 8);  // Node 3 to Node 4 with value 8
+        trackSearch.addEdge(3, 0, 2);  // Node 3 to Node 0 with value 2
+        trackSearch.addEdge(4, 5, 6);  // Node 4 to Node 5 with value 6
+        trackSearch.addEdge(5, 1, 4);  // Node 5 to Node 1 with value 4
 
         // Prompt the user to enter the source and destination vertices
         Scanner scanner = new Scanner(System.in);
@@ -104,7 +103,7 @@ public class PathFinderDFS {
         int destination = scanner.nextInt();
 
         // Find the path using DFS
-        List<Integer> path = pathFinder.findPathDFS(source, destination);
+        List<Integer> path = trackSearch.findPathDFS(source, destination);
 
         // Output the result
         if (path != null) {
@@ -123,7 +122,7 @@ public class PathFinderDFS {
             for (int i = 0; i < path.size() - 1; i++) {
                 int sourceVertex = path.get(i);
                 int destinationVertex = path.get(i + 1);
-                int edgeWeight = pathFinder.getEdgeValue(sourceVertex, destinationVertex);
+                int edgeWeight = trackSearch.getEdgeValue(sourceVertex, destinationVertex);
                 totalWeight += edgeWeight;
             }
 
