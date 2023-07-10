@@ -89,12 +89,12 @@ public class PathFinderDFS {
         PathFinderDFS pathFinder = new PathFinderDFS(numVertices);
         pathFinder.addEdge(0, 1, 5);  // Vertex 0 (source) to Vertex 1 with value 5
         pathFinder.addEdge(0, 2, 7);  // Vertex 0 (source) to Vertex 2 with value 7
-        pathFinder.addEdge(1, 4, 10); // Vertex 1 to Vertex 3 with value 10
+        pathFinder.addEdge(1, 4, 10); // Vertex 1 to Vertex 4 with value 10
         pathFinder.addEdge(2, 3, 3);  // Vertex 2 to Vertex 3 with value 3
         pathFinder.addEdge(3, 4, 8);  // Vertex 3 to Vertex 4 with value 8
-        pathFinder.addEdge(3, 0, 2);  // Vertex 3 to Vertex 5 with value 2
-        pathFinder.addEdge(4, 5, 6);  // Vertex 4 to Vertex 6 with value 6
-        pathFinder.addEdge(5, 1, 4);  // Vertex 5 to Vertex 6 with value 4
+        pathFinder.addEdge(3, 0, 2);  // Vertex 3 to Vertex 0 with value 2
+        pathFinder.addEdge(4, 5, 6);  // Vertex 4 to Vertex 5 with value 6
+        pathFinder.addEdge(5, 1, 4);  // Vertex 5 to Vertex 1 with value 4
 
         // Prompt the user to enter the source and destination vertices
         Scanner scanner = new Scanner(System.in);
