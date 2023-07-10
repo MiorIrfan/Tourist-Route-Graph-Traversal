@@ -7,12 +7,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class ModifiedFinder {
-    private int numNodes;
-    private List<Integer>[] adjacentList;
-    private List<Edge>[] nodeEdgeList;
-    private List<Integer> track;
+    private int numNodes; //the number input edges input for the the nodes
+    private List<Integer>[] adjacentList; //store the nodes and their neighbour
+    private List<Edge>[] nodeEdgeList; //store the nodes, the vertex and weight value of the nodes
     private boolean foundedTrack;
 
+    //to create and array list of the nodes
     public ModifiedFinder(int numNodes) {
         this.numNodes = numNodes;
         adjacentList = new ArrayList[numNodes];
@@ -21,15 +21,16 @@ public class ModifiedFinder {
             adjacentList[i] = new ArrayList<>();
             nodeEdgeList[i] = new ArrayList<>();
         }
-        track = new ArrayList<>();
         foundedTrack = false;
     }
 
+    //Add data of each node, their vertex and edge value
     public void addEdge(int origin, int destination, int value) {
         adjacentList[origin].add(destination);
         nodeEdgeList[origin].add(new Edge(origin, destination, value));
     }
 
+    //To initialise the depth first search algorithm
     public List<Integer> findPathDFS(int originNode, int destinationNode) {
         boolean[] visited = new boolean[numNodes];
         int[] parent = new int[numNodes];
@@ -49,6 +50,7 @@ public class ModifiedFinder {
         }
     }
 
+    //to do the depth first search algorithm
     private void dfs(int current, int destination, boolean[] visited, int[] parent) {
         visited[current] = true;
         if (current == destination) {
@@ -59,7 +61,7 @@ public class ModifiedFinder {
             int neighbor = adjacentList[current].get(i);
             if (!visited[neighbor]) {
                 parent[neighbor] = current;
-                dfs(neighbor, destination, visited, parent);
+                dfs(neighbor, destination, visited, parent); //recursion for visiting other nodes in the path
                 if (foundedTrack) {
                     return;
                 }
@@ -68,6 +70,7 @@ public class ModifiedFinder {
         visited[current] = false;
     }
 
+    //Class edge used to get value of edge for the nodes
     static class Edge {
         int origin;
         int destination;
@@ -80,6 +83,7 @@ public class ModifiedFinder {
         }
     }
 
+    //return the value of edge for a node
     public int getEdgeValue(int origin, int destination) {
         for (Edge edge : nodeEdgeList[origin]) {
             if (edge.destination == destination) {
@@ -89,6 +93,7 @@ public class ModifiedFinder {
         return 0;  // If no edge found, return 0 or a suitable default value
     }
 
+    //display the list of locations to be selected by the user
     public static int menu() {
         System.out.println("Please choose from the list of available location/n");
         System.out.println("BALIK PULAU     ---   MUZIUM CAFE WESTERN");
@@ -104,12 +109,13 @@ public class ModifiedFinder {
         return -1;
     }
 
+
     public static void main(String[] args) {
         // Create a road network graph
-        int numNodes = 48;
-        ModifiedFinder trackSearcher = new ModifiedFinder(numNodes);
+        int numNodes = 48; //initialize the number of array
+        ModifiedFinder trackSearcher = new ModifiedFinder(numNodes); //create an instance of the ModifiedFInder class
 
-        // Read edges from a file
+        // Read data from a file
         try {
             File file = new File("edges.txt");
             Scanner scanner = new Scanner(file);
@@ -133,16 +139,16 @@ public class ModifiedFinder {
         System.out.println("    This application will suggest the top 1 route that you can take");
         System.out.println("----------------------------------------------------------------------");
 
-        menu();
+        menu(); //display the menu
 
         String originNode, destinationNode;
         int origin, destination;
-
         char answer;
+        Scanner scanner = new Scanner(System.in);
+
         do {
             do {
                 // Prompt the user to enter the origin and destination cities
-                Scanner scanner = new Scanner(System.in);
                 System.out.print("\nEnter your current location: ");
                 originNode = scanner.nextLine().trim().toUpperCase();
                 System.out.print("Enter your destination: ");
@@ -183,9 +189,7 @@ public class ModifiedFinder {
                 System.out.println("No path from " + originNode + " to " + destinationNode + " found.");
             }
 
-
             System.out.print("Do you want to find another place you want to go? (y/n): ");
-            Scanner scanner = new Scanner(System.in);
             answer = scanner.nextLine().toLowerCase().charAt(0);
         } while (answer == 'y');
 
