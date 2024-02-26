@@ -1,0 +1,1 @@
+Depth first search (DFS) is an algorithm that is implemented to explore a graph or tree by beginning at the origin node and start travel all of the nodes that are available. After all of the nodes are explored, the backtracking process will be used to ensure that every single node or vertices are explored. 
